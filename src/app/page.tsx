@@ -1,11 +1,14 @@
+import Bannar from "@/components/Bannar";
+
+import Section from "@/components/section";
 
 
 const page = () => {
   return (
-    <div>
+    <div className=" bg-[#F3FBF4]">
 
-      আজকের বাজারের দাম এক নজরে
-      চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
+      <Bannar />
+      <Section />
     </div>
   );
 };

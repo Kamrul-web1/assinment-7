@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Serif_Bengali } from "next/font/google";
 import "./globals.css";
 import Hedar from "@/components/Hedar";
+import Marque from "@/components/Marque";
 
 const notoshrifBengli = Noto_Serif_Bengali({
 
@@ -24,7 +25,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
 
         <Hedar />
-        {children}
+        <Marque />
+        <main >
+
+          {children}
+        </main>
 
       </body>
     </html>

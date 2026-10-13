@@ -1,5 +1,7 @@
 
 import Image from "next/image";
+import NavLinks from "./NavLinks";
+import Link from "next/link";
 
 const Hedar = () => {
     const data = new Date().toLocaleDateString("bn-BD", {
@@ -12,15 +14,17 @@ const Hedar = () => {
 
                 {/* Logo and Date */}
                 <div className="flex min-w-0 items-center gap-2 sm:gap-4 ">
-                    <Image
-                        src="/logo-icon.png"
-                        width={48}
-                        height={48}
-                        alt="বাজার দর"
-                        className="h-9 w-9 shrink-0 object-contain sm:h-12 sm:w-12 rounded-xl bg-[#05893E] p-2"
-                    />
+                    <Link href={'/'}>
+                        <Image
 
-                    <div className="min-w-0">
+                            src="/logo-icon.png"
+                            width={48}
+                            height={48}
+                            alt="বাজার দর"
+                            className="h-9 w-9 shrink-0 object-contain sm:h-12 sm:w-12 rounded-xl bg-[#05893E] p-2"
+                        /></Link>
+
+                    <div className="min-w-0 " >
                         <h1 className="text-base font-bold text-gray-900 sm:text-xl md:text-2xl">
                             বাজার দর
                         </h1>
@@ -43,6 +47,7 @@ const Hedar = () => {
                 </div>
 
             </div>
+            <NavLinks />
         </header>
     );
 };
