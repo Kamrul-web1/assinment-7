@@ -2,6 +2,7 @@
 import Image from "next/image";
 import NavLinks from "./NavLinks";
 import Link from "next/link";
+import Useringormation from "./Useringormation";
 
 const Hedar = () => {
     const data = new Date().toLocaleDateString("bn-BD", {
@@ -36,16 +37,8 @@ const Hedar = () => {
                 </div>
 
                 {/* Buttons */}
-                <div className="flex shrink-0 items-center gap-1 sm:gap-3">
-                    <button className="btn rounded-xl px-2.5 text-xs sm:px-4 sm:text-sm">
-                        সাইন ইন
-                    </button>
 
-                    <button className="btn rounded-xl bg-[#05893E] px-2.5 text-xs text-white sm:px-4 sm:text-sm">
-                        সাইন আপ
-                    </button>
-                </div>
-
+                <Useringormation />
             </div>
             <NavLinks />
         </header>
