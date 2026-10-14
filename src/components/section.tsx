@@ -1,4 +1,7 @@
 
+import Link from "next/link";
+
+
 type Product = {
     id: number;
     slug: string;
@@ -57,64 +60,69 @@ const ProductCard = ({
                 : `— ${banglaNumber(0)}%`;
 
     return (
-        <article className="flex min-w-0 flex-col justify-between rounded-2xl border border-[#E1E8E1] bg-white p-3 transition hover:border-green-200 hover:shadow-md sm:p-4">
-            {/* Product image and information */}
-            <div className="flex items-center gap-3">
-                <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#F1F5F1]">
-                    {isImageUrl ? (
-                        <img
-                            src={product.image}
-                            alt={product.nameBn}
-                            className="h-full w-full object-contain p-1"
-                        />
-                    ) : (
-                        <span className="text-2xl">
-                            {product.image ||
-                                product.categoryIcon ||
-                                "🛒"}
-                        </span>
-                    )}
+        <Link
+            href={`/productsDetlish/${product.id}`}
+            className="block h-full"
+        >
+            <article className="flex min-w-0 flex-col justify-between rounded-2xl border border-[#E1E8E1] bg-white p-3 transition hover:border-green-200 hover:shadow-md sm:p-4">
+                {/* Product image and information */}
+                <div className="flex items-center gap-3">
+                    <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#F1F5F1]">
+                        {isImageUrl ? (
+                            <img
+                                src={product.image}
+                                alt={product.nameBn}
+                                className="h-full w-full object-contain p-1"
+                            />
+                        ) : (
+                            <span className="text-2xl">
+                                {product.image ||
+                                    product.categoryIcon ||
+                                    "🛒"}
+                            </span>
+                        )}
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                        <p className="truncate text-xs text-gray-500">
+                            {product.categoryNameBn}
+                        </p>
+
+                        <h3 className="mt-1 truncate text-sm font-bold text-[#26352B] sm:text-base">
+                            {product.nameBn}
+                        </h3>
+
+                        <p className="mt-1 text-xs text-gray-500">
+                            {units[product.unit] ||
+                                `প্রতি ${product.unit}`}
+                        </p>
+                    </div>
                 </div>
 
-                <div className="min-w-0 flex-1">
-                    <p className="truncate text-xs text-gray-500">
-                        {product.categoryNameBn}
-                    </p>
+                {/* Price and price change */}
+                <div className="mt-4 flex items-end justify-between gap-2 border-t border-[#EEF1EE] pt-3">
+                    <div className="min-w-0">
+                        <p className="text-xs text-gray-500">
+                            আজকের দাম
+                        </p>
 
-                    <h3 className="mt-1 truncate text-sm font-bold text-[#26352B] sm:text-base">
-                        {product.nameBn}
-                    </h3>
+                        <p className="mt-1 text-base font-bold text-[#26352B] sm:text-lg">
+                            {banglaNumber(product.today)} টাকা
+                        </p>
 
-                    <p className="mt-1 text-xs text-gray-500">
-                        {units[product.unit] ||
-                            `প্রতি ${product.unit}`}
-                    </p>
+                        <p className="mt-1 text-xs text-gray-400">
+                            আগের দাম: {banglaNumber(product.yesterday)} টাকা
+                        </p>
+                    </div>
+
+                    <span
+                        className={`shrink-0 rounded-full px-2 py-1 text-xs font-semibold ${badgeStyle}`}
+                    >
+                        {changeText}
+                    </span>
                 </div>
-            </div>
-
-            {/* Price and price change */}
-            <div className="mt-4 flex items-end justify-between gap-2 border-t border-[#EEF1EE] pt-3">
-                <div className="min-w-0">
-                    <p className="text-xs text-gray-500">
-                        আজকের দাম
-                    </p>
-
-                    <p className="mt-1 text-base font-bold text-[#26352B] sm:text-lg">
-                        {banglaNumber(product.today)} টাকা
-                    </p>
-
-                    <p className="mt-1 text-xs text-gray-400">
-                        আগের দাম: {banglaNumber(product.yesterday)} টাকা
-                    </p>
-                </div>
-
-                <span
-                    className={`shrink-0 rounded-full px-2 py-1 text-xs font-semibold ${badgeStyle}`}
-                >
-                    {changeText}
-                </span>
-            </div>
-        </article>
+            </article>
+        </Link>
     );
 };
 
