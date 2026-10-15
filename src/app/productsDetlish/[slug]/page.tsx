@@ -1,5 +1,8 @@
 
 import Link from "next/link";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 interface Market {
     market: string;
@@ -37,6 +40,20 @@ const BazarIdDetelsh = async ({
 }) => {
     const { slug } = await params;
 
+    // Login check: user login না থাকলে details page দেখাবে না
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
+    if (!session) {
+        const callbackURL = `/productsDetlish/${encodeURIComponent(slug)}`;
+
+        redirect(
+            `/signin?callbackURL=${encodeURIComponent(callbackURL)}`
+        );
+    }
+
+    // User login করা থাকলে নিচের product fetch ও page render হবে
     let product: Product | null = null;
 
     try {
@@ -214,8 +231,6 @@ const BazarIdDetelsh = async ({
                             </p>
                         </div>
                     </div>
-
-
                 </section>
 
                 {/* Market Prices Table */}
@@ -230,61 +245,57 @@ const BazarIdDetelsh = async ({
                     </div>
 
                     {validMarkets.length > 0 ? (
-                        <>
+                        <div className="overflow-x-auto rounded-lg border border-gray-200">
+                            <table className="w-full min-w-[650px] border-collapse text-left text-sm">
+                                <thead className="bg-[#f2f7f2] text-gray-600">
+                                    <tr>
+                                        <th className="px-4 py-3 font-semibold">বাজার</th>
+                                        <th className="px-4 py-3 font-semibold">বিভাগ</th>
+                                        <th className="px-4 py-3 text-right font-semibold">
+                                            সর্বনিম্ন
+                                        </th>
+                                        <th className="px-4 py-3 text-right font-semibold">
+                                            সর্বোচ্চ
+                                        </th>
+                                        <th className="px-4 py-3 text-right font-semibold">
+                                            গড় দাম
+                                        </th>
+                                    </tr>
+                                </thead>
 
+                                <tbody className="divide-y divide-gray-200">
+                                    {validMarkets.map((market, index) => {
+                                        const marketAverage =
+                                            market.average != null
+                                                ? Number(market.average)
+                                                : (Number(market.min) + Number(market.max)) / 2;
 
-                            <div className="overflow-x-auto rounded-lg border border-gray-200">
-                                <table className="w-full min-w-[650px] border-collapse text-left text-sm">
-                                    <thead className="bg-[#f2f7f2] text-gray-600">
-                                        <tr>
-                                            <th className="px-4 py-3 font-semibold">বাজার</th>
-                                            <th className="px-4 py-3 font-semibold">বিভাগ</th>
-                                            <th className="px-4 py-3 text-right font-semibold">
-                                                সর্বনিম্ন
-                                            </th>
-                                            <th className="px-4 py-3 text-right font-semibold">
-                                                সর্বোচ্চ
-                                            </th>
-                                            <th className="px-4 py-3 text-right font-semibold">
-                                                গড় দাম
-                                            </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody className="divide-y divide-gray-200">
-                                        {validMarkets.map((market, index) => {
-                                            const marketAverage =
-                                                market.average != null
-                                                    ? Number(market.average)
-                                                    : (Number(market.min) + Number(market.max)) / 2;
-
-                                            return (
-                                                <tr
-                                                    key={`${market.market}-${market.division}-${index}`}
-                                                    className="transition hover:bg-emerald-50/60"
-                                                >
-                                                    <td className="whitespace-nowrap px-4 py-3 font-medium text-gray-800">
-                                                        {market.market}
-                                                    </td>
-                                                    <td className="whitespace-nowrap px-4 py-3 text-gray-600">
-                                                        {market.division}
-                                                    </td>
-                                                    <td className="whitespace-nowrap px-4 py-3 text-right font-medium text-emerald-700">
-                                                        ৳ {formatPrice(Number(market.min))}
-                                                    </td>
-                                                    <td className="whitespace-nowrap px-4 py-3 text-right font-medium text-red-600">
-                                                        ৳ {formatPrice(Number(market.max))}
-                                                    </td>
-                                                    <td className="whitespace-nowrap px-4 py-3 text-right font-semibold text-gray-800">
-                                                        ৳ {formatPrice(marketAverage)}
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </>
+                                        return (
+                                            <tr
+                                                key={`${market.market}-${market.division}-${index}`}
+                                                className="transition hover:bg-emerald-50/60"
+                                            >
+                                                <td className="whitespace-nowrap px-4 py-3 font-medium text-gray-800">
+                                                    {market.market}
+                                                </td>
+                                                <td className="whitespace-nowrap px-4 py-3 text-gray-600">
+                                                    {market.division}
+                                                </td>
+                                                <td className="whitespace-nowrap px-4 py-3 text-right font-medium text-emerald-700">
+                                                    ৳ {formatPrice(Number(market.min))}
+                                                </td>
+                                                <td className="whitespace-nowrap px-4 py-3 text-right font-medium text-red-600">
+                                                    ৳ {formatPrice(Number(market.max))}
+                                                </td>
+                                                <td className="whitespace-nowrap px-4 py-3 text-right font-semibold text-gray-800">
+                                                    ৳ {formatPrice(marketAverage)}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     ) : (
                         <div className="rounded-xl border border-dashed border-gray-300 bg-[#fbfdfb] px-4 py-12 text-center">
                             <div className="mb-3 text-4xl">🏪</div>
@@ -312,4 +323,3 @@ const BazarIdDetelsh = async ({
 };
 
 export default BazarIdDetelsh;
-

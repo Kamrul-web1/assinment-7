@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState } from "react";
 
 interface Product {
@@ -32,6 +33,9 @@ interface ProductListProps {
 }
 
 export default function ProductList({
+
+
+
     products,
 }: ProductListProps) {
     const [sort, setSort] = useState("default");
@@ -57,6 +61,8 @@ export default function ProductList({
             </main>
         );
     }
+
+
 
     return (
         <main className="min-h-screen bg-[#eff5ef] px-4 py-5 sm:px-6">

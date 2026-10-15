@@ -4,6 +4,8 @@ import "./globals.css";
 import Hedar from "@/components/Hedar";
 import Marque from "@/components/Marque";
 import Footar from "@/components/Footar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const notoshrifBengli = Noto_Serif_Bengali({
 
@@ -24,6 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${notoshrifBengli.className}  h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ToastContainer />
 
         <Hedar />
         <Marque />
