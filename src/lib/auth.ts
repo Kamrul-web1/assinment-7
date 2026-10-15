@@ -6,7 +6,7 @@ import { mongodbAdapter } from "@better-auth/mongo-adapter";
 const mongoUrl = process.env.MONGODB_ULR;
 
 if (!mongoUrl) {
-    throw new Error("MONGODB_ULR is missing in .env");
+    throw new Error(process.env.MONGODB_ULR);
 }
 
 const client = new MongoClient(mongoUrl);
