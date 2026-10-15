@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -13,7 +13,7 @@ const SignupPage = () => {
     const [loading, setLoading] = useState(false);
     const [socialLoading, setSocialLoading] = useState("");
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
@@ -65,7 +65,7 @@ const SignupPage = () => {
         }
     };
 
-    const handleSocialLogin = async (provider) => {
+    const handleSocialLogin = async (provider: string) => {
         setSocialLoading(provider);
 
         try {

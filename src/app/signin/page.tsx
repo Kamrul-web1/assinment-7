@@ -67,7 +67,7 @@ const SinginPage = () => {
         }
     };
 
-    const handleSocialLogin = async (provider) => {
+    const handleSocialLogin = async (provider: string) => {
         setSocialLoading(provider);
 
         try {
