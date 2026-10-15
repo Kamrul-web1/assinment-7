@@ -40,7 +40,7 @@ export default function ProfilePage() {
 
     const user = session.user;
 
-    const handleUpdate = async (e) => {
+    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const newName = name.trim();
@@ -82,15 +82,15 @@ export default function ProfilePage() {
             const { error } = await authClient.signOut();
 
             if (error) {
-                toast.error(error.message || "Logout করা যায়নি।");
+                toast.error(error.message || "সাইন আউট করা যায়নি।");
                 return;
             }
 
-            toast.success("সফলভাবে Logout হয়েছে!");
+            toast.success("সফলভাবে সাইন আউট হয়েছে!");
             router.replace("/signin");
             router.refresh();
         } catch {
-            toast.error("Logout করতে সমস্যা হয়েছে।");
+            toast.error("সাইন আউট করতে সমস্যা হয়েছে।");
         } finally {
             setLoggingOut(false);
         }
@@ -100,7 +100,7 @@ export default function ProfilePage() {
         <main className="min-h-[500px] bg-[#F0F5F0] px-4 py-8 sm:py-10">
             <div className="mx-auto w-full max-w-2xl">
 
-                {/* Profile Heading */}
+                {/* প্রোফাইল শিরোনাম */}
                 <div className="mb-5">
                     <h1 className="text-xl font-bold text-[#202B23]">
                         আমার প্রোফাইল
@@ -110,7 +110,7 @@ export default function ProfilePage() {
                     </p>
                 </div>
 
-                {/* User Information */}
+                {/* ব্যবহারকারীর তথ্য */}
                 <section className="flex flex-col gap-4 rounded-xl border border-[#E0E8E0] bg-[#FAFCFA] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
                     <div className="flex min-w-0 items-center gap-3">
                         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#07883F] text-xl font-bold text-white">
@@ -133,14 +133,14 @@ export default function ProfilePage() {
                         disabled={loggingOut}
                         className="shrink-0 self-start rounded-md border border-red-300 px-3 py-2 text-sm text-red-600 transition hover:bg-red-50 disabled:opacity-50 sm:self-auto"
                     >
-                        {loggingOut ? "Logout হচ্ছে..." : "↪ সাইন আউট"}
+                        {loggingOut ? "সাইন আউট হচ্ছে..." : "↪ সাইন আউট"}
                     </button>
                 </section>
 
-                {/* Edit Profile Form */}
+                {/* প্রোফাইল সম্পাদনা */}
                 <section className="mt-4 rounded-xl border border-[#E0E8E0] bg-[#FAFCFA] p-5 sm:p-6">
                     <h2 className="font-semibold text-gray-800">
-                        তথ্য
+                        ব্যক্তিগত তথ্য
                     </h2>
 
                     <form onSubmit={handleUpdate} className="mt-6">
@@ -148,7 +148,7 @@ export default function ProfilePage() {
                             htmlFor="profile-name"
                             className="mb-2 block text-sm text-gray-700"
                         >
-                            নাম
+                            আপনার নাম
                         </label>
 
                         <input
@@ -168,7 +168,7 @@ export default function ProfilePage() {
                             disabled={saving || !name.trim()}
                             className="mt-3 flex h-10 w-full items-center justify-center rounded-md bg-[#07883F] text-sm font-semibold text-white shadow-md transition hover:bg-[#056D32] disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            {saving ? "আপডেট হচ্ছে..." : "আপডেট"}
+                            {saving ? "আপডেট হচ্ছে..." : "তথ্য আপডেট করুন"}
                         </button>
                     </form>
                 </section>
