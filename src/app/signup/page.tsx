@@ -71,7 +71,7 @@ const SignupPage = () => {
         try {
             const { error } = await authClient.signIn.social({
                 provider,
-                callbackURL: "/profile",
+                callbackURL: "/",
             });
 
             if (error) {
