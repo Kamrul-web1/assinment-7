@@ -113,8 +113,16 @@ export default function ProfilePage() {
                 {/* ব্যবহারকারীর তথ্য */}
                 <section className="flex flex-col gap-4 rounded-xl border border-[#E0E8E0] bg-[#FAFCFA] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
                     <div className="flex min-w-0 items-center gap-3">
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#07883F] text-xl font-bold text-white">
-                            {user.name?.charAt(0)?.toUpperCase() || "U"}
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#07883F] text-xl font-bold text-white">
+                            {user.image ? (
+                                <img
+                                    src={user.image}
+                                    alt={user.name || "Profile"}
+                                    className="h-full w-full object-cover"
+                                />
+                            ) : (
+                                user.name?.charAt(0)?.toUpperCase() || "U"
+                            )}
                         </div>
 
                         <div className="min-w-0">
